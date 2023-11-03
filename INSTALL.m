@@ -5,14 +5,13 @@ function INSTALL(varargin)
     %
     % Optional Args:
     %     * action (char): 'install' or 'uninstall' (default: 'install')
-    %     * type (char): 'path', 'GUI', or 'all' (default: 'all')
+    %     * type (char): 'path' or 'all' (default: 'all')
     %
     % Examples:
     %     * INSTALL();                  % Installs the Combustion Toolbox
     %     * INSTALL('uninstall');       % Uninstalls the Combustion Toolbox
     %     * INSTALL('install', 'path'); % Installs the Combustion Toolbox (only MATLAB path)
-    %     * INSTALL('install', 'GUI');  % Installs the Combustion Toolbox (only GUI)
-    %     * INSTALL('install', 'all');  % Installs the Combustion Toolbox
+    %     * INSTALL('install', 'all');  % Installs the Combustion Toolbox (only MATLAB path, GUI is not compatible for MATLAB2015a)
     %
     % Notes:
     %     The code is available in:
@@ -35,7 +34,6 @@ function INSTALL(varargin)
     name = 'Combustion Toolbox';
     app_name = 'combustion_toolbox_app';
     dir_code = get_dir_code();
-    dir_app = fullfile(dir_code, 'installer', [app_name, '.mlappinstall']);
 
     % Unpack
     if nargin
@@ -47,7 +45,7 @@ function INSTALL(varargin)
     end
     
     % Get type of installation/uninstallation
-    [FLAG_PATH, FLAG_GUI] = get_type(type);
+    FLAG_PATH = get_type(type);
     
     % Install/Uninstall Combustion Toolbox
     action_code(action);
@@ -63,21 +61,10 @@ function INSTALL(varargin)
         switch lower(action)
             case 'install'
                 f_path = @addpath;
-                f_app = @matlab.apputil.install;
                 message = 'Installing';
                 
             case 'uninstall'
                 f_path = @rmpath;
-                f_app = @matlab.apputil.uninstall;
-                app_info = matlab.apputil.getInstalledAppInfo;
-                FLAG_ID = contains(struct2table(app_info).id, app_name);
-    
-                if ~sum(FLAG_ID)
-                    dir_app = [];
-                else
-                    dir_app =  app_info(FLAG_ID).id;
-                end
-    
                 message = 'Uninstalling';
 
             otherwise
@@ -86,10 +73,6 @@ function INSTALL(varargin)
         
         % Install/Uninstall path
         action_path(f_path, message);
-        
-        % Install/Uninstall the Combustion Toolbox app
-        action_app(f_app, message);
-    
     end
     
     function action_path(f_path, message)
@@ -114,7 +97,7 @@ function INSTALL(varargin)
         
         % Add all subfolders to the MATLAB path
         for i = length(subfolders):-1:1
-            dir_subfolders = fullfile(subfolders(i).folder, subfolders(i).name);
+            dir_subfolders = fullfile(dir_code, subfolders(i).name);
             genpath_subfolders = genpath(dir_subfolders);
             f_path(genpath_subfolders);
         end
@@ -125,27 +108,6 @@ function INSTALL(varargin)
         end
 
         fprintf('OK!\n')
-    end
-
-    function action_app(f_app, message)
-        % Install/Uninstall the Combustion Toolbox app
-        %
-        % Args:
-        %     f_app (function): Function to install or uninstall the app
-        %     message (char): Message to display
-        if ~FLAG_GUI
-            return
-        end
-            
-        if isempty(dir_app)
-            fprintf('%s app is not currently installed.\n', name);
-            return
-        end
-
-        fprintf('%s %s app...  ', message, name);
-        f_app(dir_app);
-        fprintf('OK!\n')
-        
     end
 
 end
@@ -169,30 +131,20 @@ function dir_code = get_dir_code()
     dir_code = pwd;
 end
 
-function [FLAG_PATH, FLAG_GUI] = get_type(type)
+function FLAG_PATH = get_type(type)
     % Get the type of installation/uninstallation
     %
     % Args:
-    %     type (char): 'path', 'GUI', or 'all'
+    %     type (char): 'path' or 'all'
     %
     % Returns:
-    %     Tuple containing
-    %
     %     * FLAG_PATH (bool): True if the path is installed/uninstalled
-    %     * FLAG_GUI (bool): True if the GUI is installed/uninstalled
 
     switch lower(type)
-        case 'all'
+        case {'all', 'path'}
             FLAG_PATH = true;
-            FLAG_GUI = true;
-        case 'path'
-            FLAG_PATH = true;
-            FLAG_GUI = false;
-        case 'gui'
-            FLAG_PATH = false;
-            FLAG_GUI = true;
         otherwise
-            error('Invalid type specified. Please use ''path'', ''gui'', or ''all''.');
+            error('Invalid type specified. Please use ''path'' or ''all''.');
     end
 
 end
