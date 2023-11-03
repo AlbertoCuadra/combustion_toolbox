@@ -79,7 +79,7 @@ function [LS, ind_elements_DB] = find_products(self, species, varargin)
     
     % Get list of products
     for i = length(ind_elements_R(:, 1)):-1:1
-        ind_species = all(ind_elements_DB - ind_elements_R(i, :) == 0, 2);
+        ind_species = all(bsxfun(@minus, ind_elements_DB, ind_elements_R(i, :)) == 0, 2);
         LS = [LS, self.S.LS_DB(ind_species)'];
     end
 

@@ -46,9 +46,9 @@ function mix = compute_properties(self, properties_matrix, p, T)
     % Get non zero species
     FLAG_NONZERO = mix.Xi > 0;
     % Compute vector atoms of each element
-    mix.NatomE = sum(Ni .* self.C.A0.value, 1);
+    mix.NatomE = Ni' * self.C.A0.value;
     % Compute vector atoms of each element without frozen species
-    mix.NatomE_react = sum(properties_matrix(self.S.ind_react, self.C.M0.ind_ni) .* self.C.A0.value(self.S.ind_react, :), 1);
+    mix.NatomE_react = properties_matrix(self.S.ind_react, self.C.M0.ind_ni)' * self.C.A0.value(self.S.ind_react, :);
     % Compute volume [m3]
     mix.v = self.PD.EOS.volume(self, T, convert_bar_to_Pa(p), self.S.LS, mix.Xi) * N_gas;
     % Compute density [kg/m3]

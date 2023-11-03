@@ -46,6 +46,6 @@ end
 % SUB-PASS FUNCTIONS
 function b = update_vector_b(A0, N0, ind_nswt, ind_swt, H0RT)
     % Compute vector b
-    b = -[(sum(A0(ind_nswt, :) .* N0(ind_nswt, 1) .* H0RT(ind_nswt)))';...
-        H0RT(ind_swt); sum(N0(ind_nswt, 1) .* H0RT(ind_nswt))];
+    b = -[(sum(bsxfun(@times, bsxfun(@times, A0(ind_nswt, :), N0(ind_nswt, 1)), H0RT(ind_nswt))))';...
+        H0RT(ind_swt); sum(bsxfun(@times, N0(ind_nswt, 1), H0RT(ind_nswt)))];
 end

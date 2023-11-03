@@ -162,8 +162,8 @@ function [DB, E, S, C] = check_DB(self, DB_master, DB, varargin)
                 Species(strfind(Species, 'eminus')) = 'E';
                 Species(Species >= '0' & Species <= '9') = ' ';
 
-                [idx0, idxf] = regexp(Species, "minus"); Species(idx0:idxf) = ' ';
-                [idx0, idxf] = regexp(Species, "plus"); Species(idx0:idxf) = ' ';
+                [idx0, idxf] = regexp(Species, 'minus'); Species(idx0:idxf) = ' ';
+                [idx0, idxf] = regexp(Species, 'plus'); Species(idx0:idxf) = ' ';
 
                 idx = find([(Species >= 'A' & Species <= 'Z'), true]);
                 lgt = diff(idx);
@@ -317,8 +317,8 @@ function [DB, E, S, C] = check_DB(self, DB_master, DB, varargin)
                 % -----------------------------------------------
                 Species(Species >= '0' & Species <= '9') = ' ';
 
-                [idx0, idxf] = regexp(Species, "minus"); Species(idx0:idxf) = ' ';
-                [idx0, idxf] = regexp(Species, "plus"); Species(idx0:idxf) = ' ';
+                [idx0, idxf] = regexp(Species, 'minus'); Species(idx0:idxf) = ' ';
+                [idx0, idxf] = regexp(Species, 'plus'); Species(idx0:idxf) = ' ';
 
                 idx = find([(Species >= 'A' & Species <= 'Z'), true]);
                 lgt = diff(idx);

@@ -38,7 +38,6 @@ function self = Miscellaneous()
     self.report_type = 'complete';                   % Type of report (short, complete)
     % * Plot
     self.config.position = get_monitor_positions(2); % Default figure position [pixels]
-    self.config.innerposition = [0.05 0.05 0.9 0.9]; % Set figure inner position [normalized]
     self.config.outerposition = [0.05 0.05 0.9 0.9]; % Set figure outer position [normalized]
     self.config.linestyle = '-';                     % Set line style for plots
     self.config.symbolstyle = 'o';                   % Set symbol style for plots
@@ -49,7 +48,7 @@ function self = Miscellaneous()
     self.config.box = 'off';                         % Display axes outline
     self.config.grid = 'off';                        % Display or hide axes grid lines
     self.config.hold = 'on';                         % Retain current plot when adding new plots
-    self.config.axis_x = 'tight';                    % Set x-axis limits
+    self.config.axis_x = 'auto';                     % Set x-axis limits
     self.config.axis_y = 'auto';                     % Set y-axis limits
     self.config.xscale = 'linear';                   % Set x-axis scale (linear or log)
     self.config.yscale = 'linear';                   % Set y-axis scale (linear or log)

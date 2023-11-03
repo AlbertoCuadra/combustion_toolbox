@@ -36,7 +36,7 @@ function self = TuningProperties()
     %     self (struct): struct with tunning properties data
 
     % Description
-    self.description = "Tuning properties";
+    self.description = 'Tuning properties';
     % Attributes
     % * Flags
     self.FLAG_FAST = true;        % Flag indicating use guess composition of the previous computation

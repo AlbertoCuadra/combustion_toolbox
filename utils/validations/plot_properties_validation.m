@@ -11,13 +11,6 @@ function mainfigure = plot_properties_validation(results1, results2, varsname_x,
     % Check plot type (with or without validation)
     FLAG_PLOT_VALIDATION = ~isempty(results2);
 
-    % Create main figure
-    mainfigure = figure;
-    % set(mainfigure, 'position', config.position);
-    set(mainfigure, 'units', 'normalized', 'innerposition', config.innerposition, 'outerposition', config.outerposition);
-    
-    tiledlayout(mainfigure, 'flow');
-
     % Loop
     for i = 1:length(varsname_x)
         varname_x = varsname_x{i};
@@ -28,7 +21,10 @@ function mainfigure = plot_properties_validation(results1, results2, varsname_x,
         results1.(varname_x) = cell2vector(select_data(results1, dataname_x), varname_x);
         results1.(varname_y) = cell2vector(select_data(results1, dataname_y), varname_y);
 
-        nexttile;
+        % Create main figure
+        mainfigure = figure;
+        set(mainfigure, 'units', 'normalized', 'outerposition', config.outerposition);
+
         ax = gca;
         set(ax, 'LineWidth', config.linewidth, 'FontSize', config.fontsize - 2, 'BoxStyle', 'full')
         set(ax, 'TickLabelInterpreter', 'latex', 'Layer', 'top')

@@ -46,9 +46,8 @@ function [ax, config, fig] = set_figure(varargin)
     % Set axes
     if isempty(ax)
         fig = figure;
-        set(fig, 'units', 'normalized', 'innerposition', config.innerposition, ...
-            'outerposition', config.outerposition)
-        ax = axes(fig);
+        set(fig, 'units', 'normalized', 'outerposition', config.outerposition)
+        ax = gca;
     end
 
     set(ax, 'LineWidth', config.linewidth, 'FontSize', config.fontsize - 2)

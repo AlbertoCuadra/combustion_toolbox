@@ -102,7 +102,7 @@ function [N0, dNi_T, dN_T, dNi_p, dN_p, ind, STOP, STOP_ions] = equilibrium_helm
     % Update matrix J (jacobian) to compute the thermodynamic derivatives
     J = update_matrix_J(A0_T(ind_elem, :), J22, N0, ind_nswt, ind_swt, NE);
     temp_zero = zeros(NS - NG + 1, 1);
-    J12_2 = [sum(A0_T(ind_elem, ind_nswt) .* N0(ind_nswt), 2); temp_zero(1:end-1)];
+    J12_2 = [sum(bsxfun(@times, A0_T(ind_elem, ind_nswt), N0(ind_nswt)), 2); temp_zero(1:end-1)];
     J = [J, J12_2; J12_2', 0];
 
     % Molar enthalpy [J/mol]
@@ -427,7 +427,7 @@ function STOP = compute_STOP(N0, deltaN0, NG, A0, NatomE, max_NatomE, tolE)
     NPi = sum(N0);
     deltaN1 = N0 .* abs(deltaN0) / NPi;
     deltaN1(NG + 1:end) = abs(deltaN0(NG + 1:end)) / NPi;
-    deltab = abs(NatomE - sum(N0 .* A0, 1));
+    deltab = abs(NatomE - N0' * A0);
     deltab = max(deltab(NatomE > max_NatomE * tolE));
     STOP = max(max(deltaN1), deltab);
 end
@@ -435,7 +435,7 @@ end
 function J11 = update_matrix_J11(A0_T, N0, ind_nswt, NE)
     % Compute submatrix J11
     for k = NE:-1:1
-        J11(:, k) = sum(A0_T(k, ind_nswt) .* A0_T(:, ind_nswt) .* N0(ind_nswt), 2);
+        J11(:, k) = sum(bsxfun(@times, bsxfun(@times, A0_T(k, ind_nswt), A0_T(:, ind_nswt)), N0(ind_nswt)), 2);
     end
 end
 
@@ -453,13 +453,13 @@ end
 
 function b = update_vector_b(A0, N0, NatomE, ind, ind_nswt, ind_swt, muRT) 
     % Compute vector b
-    bi_0 = (NatomE - N0(ind, 1)' * A0(ind, :) + sum(A0(ind_nswt, :) .* N0(ind_nswt, 1) .* muRT(ind_nswt)))';    
+    bi_0 = (NatomE - N0(ind, 1)' * A0(ind, :) + sum(bsxfun(@times, bsxfun(@times, A0(ind_nswt, :), N0(ind_nswt, 1)), muRT(ind_nswt))))';    
     b = [bi_0; muRT(ind_swt)];
 end
 
 function Delta_ln_nj = update_Delta_ln_nj(A0, pi_i, muRT, ind_nswt)
     % Compute correction moles of gases
-    Delta_ln_nj = sum(A0(ind_nswt, :)' .* pi_i, 1)' - muRT(ind_nswt);
+    Delta_ln_nj = sum(bsxfun(@times, A0(ind_nswt, :)', pi_i), 1)' - muRT(ind_nswt);
 end
 
 function [N0, STOP, FLAG_ION] = check_convergence_ions(N0, A0, ind_E, ind_nswt, ind_ions, TOL, TOL_pi, itMax)
@@ -523,7 +523,7 @@ function [delta, deltaN3] = ions_factor(N0, A0, ind_E, ind_nswt, ind_ions)
         return
     end
 
-    delta = -sum(A0(ind_nswt, ind_E) .* N0(ind_nswt, 1))/ ...
-             sum(A0(ind_nswt, ind_E).^2 .* N0(ind_nswt, 1));
-    deltaN3 = abs(sum(N0(ind_nswt, 1) .* A0(ind_nswt, ind_E)));
+    delta = -sum( bsxfun(@times, A0(ind_nswt, ind_E), N0(ind_nswt, 1)))/ ...
+             sum( bsxfun(@times, A0(ind_nswt, ind_E).^2, N0(ind_nswt, 1)));
+    deltaN3 = abs(sum( bsxfun(@times, N0(ind_nswt, 1), A0(ind_nswt, ind_E))));
 end

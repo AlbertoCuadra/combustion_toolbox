@@ -13,7 +13,7 @@ function self = contained_elements(self)
         L_E1 = []; L_E2 = [];
         formula = self.S.LS_formula{k};
 
-        [idx0, idxf] = regexp(formula, "[A-Z]{2,}");
+        [idx0, idxf] = regexp(formula, '[A-Z]{2,}');
 
         for j = length(idxf):-1:1
             L_E2{j} = formula(idx0(j):idxf(j));
@@ -25,7 +25,7 @@ function self = contained_elements(self)
 
         end
 
-        [~, idxf] = regexp(formula, "[A-Z]{1}");
+        [~, idxf] = regexp(formula, '[A-Z]{1}');
 
         for j = length(idxf):-1:1
             L_E1{j} = formula(idxf(j));

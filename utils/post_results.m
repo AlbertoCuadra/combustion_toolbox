@@ -359,6 +359,7 @@ function plot_properties_complete(self, range_name, range, ProblemType)
     Nmix = length(mix_labels);
     
     % Get mixtures
+    mix = cell(1, Nmix);
     for i = Nmix:-1:1
         dataname{i} = get_dataname(mix_labels{i});
         mix{:, i} = select_data(self, dataname{i});

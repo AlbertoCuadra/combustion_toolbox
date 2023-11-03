@@ -1,4 +1,4 @@
-function main_ax = plot_figure_set(range_name, range, properties, mix, varargin)
+function ax = plot_figure_set(range_name, range, properties, mix, varargin)
     % Plot a set of properties in a tiled layout figure
     %
     % Args:
@@ -23,7 +23,8 @@ function main_ax = plot_figure_set(range_name, range, properties, mix, varargin)
     
     % Defaults
     basis = [];
-    main_ax = [];
+    ax = [];
+    FLAG_AX = false;
     Misc = Miscellaneous;
     config = Misc.config;
 
@@ -31,7 +32,7 @@ function main_ax = plot_figure_set(range_name, range, properties, mix, varargin)
     for i = 1:2:nargin-4
         switch lower(varargin{i})
             case 'ax'
-                main_ax = varargin{i + 1};
+                ax = varargin{i + 1}; FLAG_AX = true;
             case 'config'
                 config = varargin{i + 1};
             case 'basis'
@@ -39,20 +40,6 @@ function main_ax = plot_figure_set(range_name, range, properties, mix, varargin)
         end
 
     end
-
-    % Create main figure
-    if isempty(main_ax)
-        main_figure = figure;
-        set(main_figure,...
-            'units', 'normalized',...
-            'innerposition', config.innerposition,...
-            'outerposition', config.outerposition);
-        main_ax = tiledlayout(main_figure, 'flow');
-    end
-
-    % Set common title
-    set_title(main_ax, config)
-    config.title = [];
     
     % Definitions
     N_properties = length(properties);
@@ -62,8 +49,19 @@ function main_ax = plot_figure_set(range_name, range, properties, mix, varargin)
 
     % Plot properties
     for i = 1:N_properties
-        nexttile;
-        ax = gca;
+        % Create figure
+        if ~FLAG_AX
+            main_figure = figure;
+            set(main_figure,...
+                'units', 'normalized',...
+                'outerposition', config.outerposition);
+            ax = gca;
+            
+            % Set title
+            set_title(ax, config)
+            config.title = [];
+        end
+
         set_figure(ax, config);
 
         plot_figure(range_name, range, properties{i}, mix, 'config', config, 'ax', ax, 'basis', basis{i});
