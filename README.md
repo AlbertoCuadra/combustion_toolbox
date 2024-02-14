@@ -28,9 +28,11 @@
   - TP: Equilibrium composition at defined temperature and pressure
   - HP: Adiabatic temperature and composition at constant pressure
   - SP: Isentropic compression/expansion to a specified pressure
+  - GP: Equilibrium composition at defined Gibbs free energy and pressure
   - TV: Equilibrium composition at defined temperature and constant volume
   - EV: Adiabatic temperature and composition at constant volume
   - SV: Isentropic compression/expansion to a specified volume
+  - FV: Equilibrium composition at defined Helmholtz free energy and volume
 * `Shock calculations:`
   - Pre-shock and post-shock states
   - Equilibrium or frozen composition
@@ -49,8 +51,6 @@
 * Export results in a spreadsheet
 * Export results as a .mat format
 * `Display predefined plots` (e.g., molar fraction vs. equilence ratio)
-
-This project is also part of the PhD of [Alberto Cuadra-Lara](https://www.acuadralara.com/).
 
 ## Start here!
 
@@ -117,7 +117,7 @@ See also the list of [contributors](https://github.com/AlbertoCuadra/combustion_
     author = "Cuadra, A and Huete, C and Vera, M",
     title = "Combustion Toolbox: A MATLAB-GUI based open-source tool for solving gaseous combustion problems",
     year = 2024,
-    note = "Version 1.0.5",
+    note = "Version 1.0.6",
     doi = {https://doi.org/10.5281/zenodo.5554911}
 }
 

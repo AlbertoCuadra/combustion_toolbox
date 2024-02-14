@@ -1,14 +1,16 @@
 % -------------------------------------------------------------------------
-% COMBUSTION TOOLBOX @v1.0.5
+% COMBUSTION TOOLBOX @v1.0.6
 % A MATLAB-GUI based open-source tool for solving gaseous combustion problems
 %
 % Type of problems:
 %   * TP -----------------> Equilibrium composition at defined T and p
 %   * HP -----------------> Adiabatic T and composition at constant p
 %   * SP -----------------> Isentropic compression/expansion to a specified p
+%   * GP -----------------> Equilibrium composition at defined G and p
 %   * TV -----------------> Equilibrium composition at defined T and constant v
 %   * EV -----------------> Adiabatic T and composition at constant v
 %   * SV -----------------> Isentropic compression/expansion to a specified v
+%   * FV -----------------> Equilibrium composition at defined F and p
 %   * SHOCK_I ------------> Planar incident shock wave
 %   * SHOCK_R ------------> Planar reflected shock wave
 %   * SHOCK_OBLIQUE ------> Oblique incident shock wave
@@ -38,13 +40,13 @@
 % Citing:
 %     Cuadra, A., Huete, C., & Vera, M. (2024). Combustion Toolbox: A
 %     MATLAB-GUI based open-source tool for solving gaseous combustion
-%     problems. (v1.0.5). Zenodo. https://doi.org/10.5281/zenodo.5554911.
+%     problems. (v1.0.6). Zenodo. https://doi.org/10.5281/zenodo.5554911.
 %
 % @author: Alberto Cuadra Lara
-%          PhD Candidate - Group Fluid Mechanics
+%          Postdoctoral researcher - Group Fluid Mechanics
 %          Universidad Carlos III de Madrid
 %                  
-% Last update Jan 29 2024
+% Last update Feb 09 2024
 % -------------------------------------------------------------------------
 help CONTENTS.m
 

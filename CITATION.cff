@@ -5,9 +5,9 @@ message: "If you use this software, please cite it using these metadata."
 type: misc
 license: "GPL-3.0"
 title: "Combustion Toolbox: A MATLAB-GUI based open-source tool for solving gaseous combustion problems"
-version: 1.0.5
+version: 1.0.6
 doi: 10.5281/zenodo.5554911
-date-released: 2024-01-29
+date-released: 2024-02-09
 url: "https://combustion-toolbox-website.readthedocs.io"
 abstract:
     "
@@ -25,9 +25,11 @@ abstract:
       - TP: Equilibrium composition at defined temperature and pressure
       - HP: Adiabatic temperature and composition at constant pressure
       - SP: Isentropic compression/expansion to a specified pressure
+      - GP: Equilibrium composition at defined Gibbs free energy and pressure
       - TV: Equilibrium composition at defined temperature and constant volume
       - EV: Adiabatic temperature and composition at constant volume
       - SV: Isentropic compression/expansion to a specified volume
+      - FV: Equilibrium composition at defined Helmholtz free energy and volume
     * `Shock calculations:`
       - Pre-shock and post shock states
       - Equilibrium or frozen composition

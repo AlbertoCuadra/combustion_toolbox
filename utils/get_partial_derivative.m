@@ -7,16 +7,19 @@ function value = get_partial_derivative(self, mix)
     %
     % Returns:
     %     value (float): Value of the partial derivative for the set problem type [kJ/K] (HP, EV) or [kJ/K^2] (SP, SV)
-
-    if strcmpi(self.PD.ProblemType, 'HP')
-        value = mix.cP;
-    elseif strcmpi(self.PD.ProblemType, 'EV')
-        value = mix.cV;
-    elseif strcmpi(self.PD.ProblemType, 'SP')
-        value = mix.cP / mix.T;
-    elseif strcmpi(self.PD.ProblemType, 'SV')
-        value = mix.cV / mix.T;
+    
+    switch upper(self.PD.ProblemType)
+        case {'HP'}
+            value = mix.cP;
+        case {'EV'}
+            value = mix.cV;
+        case {'SP'}
+            value = mix.cP / mix.T;
+        case {'SV'}
+            value = mix.cV / mix.T;
+        case {'GP', 'FV'}
+            value = - mix.S * 1e3;
     end
 
-    value = value * 1e-3; % [kJ/K] (HP, EV) or [kJ/K^2] (SP, SV)
+    value = value * 1e-3; % [kJ/K] (HP, EV, GP, FV) or [kJ/K^2] (SP, SV)
 end

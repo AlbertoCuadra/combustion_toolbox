@@ -26,21 +26,21 @@ function mix2 = equilibrate(self, mix1, pP, varargin)
         return
     end
 
-    % get attribute xx of the specified transformations
+    % Get attribute xx of the specified transformations
     attr_name = get_attr_name(self);
-    % compute initial guess
+    % Compute initial guess
     [guess, guess_moles] = get_guess(self, mix1, pP, attr_name, mix2);
     % If the problem type is SV, the product's volume is based on the given v_P/v_R ratio
     mix1 = set_volume_SV(self, mix1);
-    % root finding: find the value x that satisfies f(x) = mix2.xx(x) - mix1.xx = 0
+    % Root finding: find the value x that satisfies f(x) = mix2.xx(x) - mix1.xx = 0
     [T, STOP, guess_moles] = root_finding(self, mix1, pP, attr_name, guess, guess_moles);
-    % compute properties
+    % Compute properties
     mix2 = equilibrate_T(self, mix1, pP, T, guess_moles);
-    % check convergence in case the problemType is TP (defined Temperature and Pressure)
+    % Check convergence in case the problemType is TP (defined Temperature and Pressure)
     print_convergence(mix2.error_moles, self.TN.tol_gibbs, mix2.error_moles_ions, self.TN.tol_pi_e, self.PD.ProblemType)
-    % save error from root finding algorithm
+    % Save error from root finding algorithm
     mix2.error_problem = STOP;
-    % save equivalence ratio
+    % Save equivalence ratio
     mix2.phi = get_phi(mix1);
 end
 
@@ -67,14 +67,19 @@ end
 
 function attr_name = get_attr_name(self)
     % Get attribute of the problem type
-    if any(strcmpi(self.PD.ProblemType, {'TP', 'TV'}))
-        attr_name = 'T';
-    elseif any(strcmpi(self.PD.ProblemType, 'HP'))
-        attr_name = 'h';
-    elseif any(strcmpi(self.PD.ProblemType, 'EV'))
-        attr_name = 'e';
-    elseif any(strcmpi(self.PD.ProblemType, {'SP', 'SV'}))
-        attr_name = 'S';
+    switch upper(self.PD.ProblemType)
+        case {'TP', 'TV'}
+            attr_name = 'T';
+        case {'HP'}
+            attr_name = 'h';
+        case {'EV'}
+            attr_name = 'e';
+        case {'SP', 'SV'}
+            attr_name = 'S';
+        case {'GP'}
+            attr_name = 'g';
+        case {'FV'}
+            attr_name = 'f';
     end
 
 end

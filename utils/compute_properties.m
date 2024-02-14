@@ -65,6 +65,8 @@ function mix = compute_properties(self, properties_matrix, p, T)
     mix.S = mix.S0 + mix.DS;
     % Compute Gibbs energy [kJ]
     mix.g = mix.h - mix.T * mix.S;
+    % Compute Helmholtz energy[kJ]
+    mix.f = mix.e - mix.T * mix.S;
     % Compute specific heat at constant volume [J/K]
     mix.cV = mix.cP - R0 * N_gas;
     % Compute Adibatic index [-]

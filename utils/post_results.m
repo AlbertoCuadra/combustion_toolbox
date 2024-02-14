@@ -292,7 +292,7 @@ function plot_properties_complete(self, range_name, range, ProblemType)
 
     % Set properties to plot
     switch lower(ProblemType)
-        case {'tp', 'tv', 'hp', 'ev', 'sp', 'sv'}
+        case {'tp', 'tv', 'hp', 'ev', 'sp', 'sv', 'gp', 'fv'}
             mix_labels = {'mix2'};
             properties = {'T', 'p', 'rho', 'h', 'e', 'g', 'S', 'gamma_s'};
             properties_basis = {[], [], [], 'mi', 'mi', 'mi', 'mi', []};

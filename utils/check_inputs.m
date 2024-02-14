@@ -30,6 +30,8 @@ function self = check_inputs(self)
             self = check_inputs_prop(self, 'pP');
         case 'SP' % * SP: Isentropic (i.e., adiabatic) compression/expansion to a specified p
             self = check_inputs_prop(self, 'pP');
+        case 'GP' % * GP: Equilibrium composition at constant G and defined p
+            self = check_inputs_prop(self, 'pP');
         case 'TV' % * TV: Equilibrium composition at defined T and constant v
             self = check_inputs_prop(self, 'TP');
             self = set_prop(self, 'pP', self.PD.pR.value); % Guess
@@ -37,6 +39,8 @@ function self = check_inputs(self)
             self = set_prop(self, 'pP', self.PD.pR.value); % Guess
         case 'SV' % * SV: Isentropic (i.e., fast adiabatic) compression/expansion to a specified v
             self = check_inputs_prop(self, 'vP_vR');
+            self = set_prop(self, 'pP', self.PD.pR.value); % Guess
+        case 'FV' % * FV: Equilibrium composition at constant F and v
             self = set_prop(self, 'pP', self.PD.pR.value); % Guess
         case {'SHOCK_I', 'SHOCK_R'} % * SHOCK_I and SHOCK_R: Calculate planar shock wave
             
